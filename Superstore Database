@@ -1,0 +1,113 @@
+#This project utilizes the following Superstore data
+
+CREATE TABLE superstore (
+    item_id INTEGER PRIMARY KEY,
+    item_name TEXT,
+    category TEXT,
+    price DECIMAL(10, 2),
+    stock_quantity INTEGER,
+    average_rating DECIMAL(3, 2)
+);
+
+INSERT INTO superstore (item_id, item_name, category, price, stock_quantity, average_rating)
+VALUES
+    (1, 'Stainless Steel Cookware Set', 'Kitchen Supplies', 89.99, 50, 4.6),
+    (2, 'Memory Foam Mattress', 'Furnishings', 499.99, 30, 4.8),
+    (3, 'Smart LED TV', 'Electronics', 549.00, 20, 4.5),
+    (4, 'Robot Vacuum Cleaner', 'Appliances', 199.50, 40, 4.3),
+    (5, 'Wireless Bluetooth Speaker', 'Electronics', 39.99, 60, 4.2),
+    (6, 'Non-Stick Baking Set', 'Kitchen Supplies', 29.95, 80, 4.4),
+    (7, 'Cotton Bedding Set', 'Furnishings', 89.00, 25, 4.7),
+    (8, 'Smart Home Security Camera', 'Electronics', 79.95, 15, 4.1),
+    (9, 'Air Purifier', 'Appliances', 129.50, 35, 4.6),
+    (10, 'Premium Coffee Maker', 'Kitchen Supplies', 79.99, 50, 4.9),
+    (11, 'Ergonomic Office Chair', 'Furnishings', 189.00, 20, 4.5),
+    (12, 'Wireless Earbuds', 'Electronics', 49.99, 75, 4.3),
+    (13, 'Slow Cooker', 'Appliances', 49.95, 30, 4.7),
+    (14, 'Cutlery Set', 'Kitchen Supplies', 34.50, 40, 4.4),
+    (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
+
+#For this project, I used SQL to query the Superstore database to get information about items sold at the store and their prices.
+
+-- #1 to show the price for all item in a table form
+select * 
+from superstore
+order by item_id;
+
+
+-- #2 to order the item by price
+select item_name, price
+from superstore
+order by item_id desc;
+
+
+-- #3 to show sum price by category
+select sum(price), category
+from superstore
+group by category;
+
+
+-- #4 to show sum price by category = furnishings
+select sum(price), category
+from superstore
+where category="Furnishings";
+
+
+-- #5 to show statistic about the item price
+select avg(price)
+from superstore;
+
+
+-- #6 to show average price for each category
+select avg(price) AS AveragePrice, category
+from superstore
+group by category desc;
+
+
+-- #7 to list all records with a higher price than average
+select *
+from superstore
+where price > (select avg(price) from superstore);
+
+
+-- #8 to show min from the superstore
+select min(price) as smallestprice
+from superstore;
+
+
+-- #9 to show min group by category
+select min(price) as smallestprice, item_name
+from superstore
+group by item_name
+limit 5;
+
+
+-- #10 to show max from the superstore
+select max(price) as highestprice
+from superstore;
+
+
+-- #11 to show min group by category
+select max(price) as highestprice, item_name
+from superstore
+group by item_name desc
+limit 5;
+
+
+-- #12 to count total of products
+select count(item_name)
+from superstore;
+
+
+-- #13 to count total of products in category Kitchen Supplies
+select count(item_name)
+from superstore
+where category='Kitchen Supplies';
+
+
+-- #14 to count total of products that average rating < 4.50
+select count(item_name)
+from superstore
+where average_rating <= '4.50';
+
+
